@@ -6,7 +6,7 @@
 //
 // Usage:  npm run db:setup            # full setup (safe to re-run)
 //         npm run db:seed             # only reload mock data (reset the demo)
-// Needs in .env.local: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL
+// Needs in .env.local: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY), SUPABASE_DB_URL
 
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -21,8 +21,10 @@ const DEMO_USERS = [
   { email: "quanly@yuki-demo.jp", full_name: "田中 (Quản lý kho)", role: "manager" },
 ];
 
-const { NEXT_PUBLIC_SUPABASE_URL: url, SUPABASE_SERVICE_ROLE_KEY: serviceKey, SUPABASE_DB_URL: dbUrl } = process.env;
-const missing = Object.entries({ NEXT_PUBLIC_SUPABASE_URL: url, SUPABASE_SERVICE_ROLE_KEY: serviceKey, SUPABASE_DB_URL: dbUrl })
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY; // new sb_secret_… or legacy service_role
+const dbUrl = process.env.SUPABASE_DB_URL;
+const missing = Object.entries({ NEXT_PUBLIC_SUPABASE_URL: url, "SUPABASE_SECRET_KEY (hoặc SUPABASE_SERVICE_ROLE_KEY)": serviceKey, SUPABASE_DB_URL: dbUrl })
   .filter(([, v]) => !v).map(([k]) => k);
 if (missing.length) {
   console.error(`✖ Thiếu biến môi trường: ${missing.join(", ")} (xem .env.example)`);
