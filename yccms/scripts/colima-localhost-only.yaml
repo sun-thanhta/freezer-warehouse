@@ -1,0 +1,10 @@
+# Keep every container port forwarded by Colima/Lima on 127.0.0.1 only (not reachable from the LAN).
+# Prepended to Colima's own rules (first match wins), so it overrides the default 0.0.0.0 -> 0.0.0.0 forward.
+# Remove this file to restore LAN exposure.
+portForwards:
+  - guestIP: 0.0.0.0
+    guestIPMustBeZero: true
+    guestPortRange: [1, 65535]
+    hostIP: 127.0.0.1
+    hostPortRange: [1, 65535]
+    proto: any
