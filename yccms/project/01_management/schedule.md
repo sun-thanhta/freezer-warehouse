@@ -7,9 +7,10 @@
 > **Nguồn số liệu** (tham chiếu, không phải giả định):
 > - **Phạm vi & cấu trúc Epic/Story:** bộ thiết kế LAB-4 — `LAB-4/01-basic-design/01-system-overview-and-scope.md` §1.3 (module), `03-screen-list-navigation-and-permissions.md` (14 màn lõi), `LAB-4/03-detail-design/` (đặc tả), `LAB-4/04-adr/adr-004-…` (phiên bản cấu hình + change request), `LAB-4/05-database/01-…` (bảng). Bản sống: `yccms/docs/`.
 > - **Mốc thời gian:** khung RFP `YCL-RFP-2026-01 v2.0` (start 2026-10-05 · basic design 8 tuần · build + test 18 tuần · UAT 6 tuần · go-live 2027-06-01), ghi lại ở `LAB-1/Yuki_Workbook_v2-RFP.xlsx` sheet `10_Du lieu RFP`.
+> - **Ràng buộc giờ lái 2024 (E-10):** RFP FR-SCH-01…05, US-06, DR-ROUTE-01, ACC-SCH-01 và số giờ Yuki công bố (workbook LAB-1 sheet `00_Huong dan`, `05_User stories`). Thiết kế chi tiết LAB-4 **chưa có** module này (F06 chỉ ở mức kiến trúc, `01-system-overview-and-scope.md` §1.3).
 > - **Effort:** `LAB-1/Yuki_Workbook_v2-RFP.xlsx` sheet `07_Estimate-WBS` (tổng 765,96 MD base scope); effort màn hình theo độ phức tạp ở sheet `04_Man hinh`.
 >
-> **Trạng thái: DỰ THẢO baseline v0.1 — chờ PM / khách xác nhận** mốc, effort theo story và capacity đội (xem mục "Việc còn mở" trong biên bản phát hành của skill; `overview.md` / `stakeholders.md` / `function-list.md` chưa được lập).
+> **Trạng thái: BASELINE v1.0 — PM duyệt ngày 2026-10-03.** Còn mở: capacity từng thành viên (chưa có `stakeholders.md`), loại hợp đồng (`overview.md`), function list chuẩn (`function-list.md`, hiện dùng mã SCR / FE làm khóa tạm), ngày của các story tạm (TBD, chờ đặc tả). Khi các mục này được chốt, chạy lại SCH để cập nhật baseline.
 
 ## 1. Master Schedule (by phase)
 
@@ -103,11 +104,14 @@
 | E-09-S01 | Story | Pick & kiểm tải barcode / seal (tạm) | FE-20 | TBD (chờ chốt thiết bị) | TBD | M-04 | E-05-S02 |
 | E-09-S02 | Story | POD theo điều kiện giao, ảnh hash, queue offline ≤ 8h (tạm) | FE-22 | TBD (chờ chốt thiết bị) | TBD | M-04 | E-05-S03 |
 | E-09-S03 | Story | Trả hàng / khiếu nại (tạm) | FE-23 | TBD (chờ đặc tả) | TBD | M-04 | E-09-S02 |
-| E-10 | Epic | Lập tuyến & giờ lái 2024 (= F06, tạm) | | TBD | TBD | M-04 | |
-| E-10-S01 | Story | Lập tuyến từ đơn / dải nhiệt xe / khung giờ (tạm) | FE-24 | TBD (chờ IF-MAP-01) | TBD | M-04 | Q-02 (license mapping), E-05-S01 |
-| E-10-S02 | Story | Kiểm ràng buộc giờ lái → cấm publish khi vi phạm (tạm) | FE-25 | TBD (chờ đặc tả) | TBD | M-04 | E-10-S01 |
-| E-10-S03 | Story | Publish tuyến có version + itinerary tài xế (tạm) | FE-26 | TBD (chờ đặc tả) | TBD | M-04 | E-10-S02 |
-| E-10-S04 | Story | Ghi sự cố tách khỏi tuân thủ (tạm) | FE-27 | TBD (chờ đặc tả) | TBD | M-04 | E-10-S03 |
+| E-10 | Epic | Lập tuyến & giờ lái 2024 (= F06, tạm — **chưa có thiết kế chi tiết**; story chia theo ràng buộc giờ lái 2024 của RFP) | | TBD | TBD | M-04 | |
+| E-10-S01 | Story | Lập tuyến từ đơn / dải nhiệt xe / khung giờ / service time / giờ depot; đơn chưa gán hiển thị lý do (tạm) | FE-24, SCR-18 | TBD (chờ IF-MAP-01 + đặc tả F06) | TBD | M-03, M-04 | Đặc tả chi tiết F06 hoàn thành trước M-03 (2026-11-27), Q-02 (license mapping), E-05-S01 |
+| E-10-S02 | Story | Bản quy tắc giờ lái có phiên bản & ngày hiệu lực, số do Yuki công bố: 超勤 960h/năm · 拘束 3.300h/năm, 284h/tháng, 13h/ngày (tối đa 15h) · nghỉ ≥ 9h (mục tiêu 11h) · lái TB 9h/ngày (2 ngày), 44h/tuần (2 tuần) · lái liên tục ≤ 4h (tạm) | FE-25, FR-SCH-02 | TBD (chờ đặc tả F06) | TBD | M-04 | E-02-S03 (cơ chế phiên bản cấu hình, ADR-004), rà soát nguồn luật 2024 trước design freeze (OPS-LAW-01, DoD D-018) |
+| E-10-S03 | Story | Kiểm ràng buộc **trong ngày** khi lập tuyến: 拘束 ≤ 13h (tối đa 15h), nghỉ giữa ca ≥ 9h, lái liên tục ≤ 4h → tự chèn nghỉ, hiển thị vị trí / thời lượng nghỉ (tạm) | FE-25, FR-SCH-02, FR-SCH-03 | TBD (chờ đặc tả F06) | TBD | M-04 | E-10-S01, E-10-S02 |
+| E-10-S04 | Story | Kiểm ràng buộc **lũy kế theo kỳ**: lái TB 9h/ngày (2 ngày), 44h/tuần (2 tuần), 拘束 284h/tháng & 3.300h/năm, 超勤 960h/năm — cộng giờ đã làm thực tế của tài xế với tuyến định publish (tạm) | FE-25, FR-SCH-02 | TBD (chờ đặc tả F06 + nguồn giờ làm thực tế) | TBD | M-04 | E-10-S02, nguồn dữ liệu giờ làm thực tế của tài xế (chưa xác định) |
+| E-10-S05 | Story | Bảng kiểm giờ lái (拘束 / 連続): vi phạm → **cấm publish** và nêu chính xác khoảng giờ vi phạm (tạm) | FE-25, SCR-19, US-06 | TBD (chờ đặc tả F06) | TBD | M-04 | E-10-S03, E-10-S04 |
+| E-10-S06 | Story | Publish tuyến có version (gắn version bản quy tắc), đổi sau publish cần lý do, tài xế nhận bản mới nhất / itinerary (tạm) | FE-26, SCR-20, SCR-21, FR-SCH-04, DR-ROUTE-01 | TBD (chờ đặc tả F06) | TBD | M-04 | E-10-S05 |
+| E-10-S07 | Story | Ghi sự cố (tai nạn / hỏng xe / thiên tai) riêng, bất biến, không ghi đè kết quả tuân thủ (tạm) | FE-27, FR-SCH-05 | TBD (chờ đặc tả F06) | TBD | M-04 | E-10-S06 |
 | E-11 | Epic | Giám sát nhiệt logger & HACCP (= F07, tạm) | | TBD | TBD | M-04 | |
 | E-11-S01 | Story | Import CSV logger (hash, timezone) + đánh giá reading theo ngưỡng phiên bản (tạm) | FE-28, FE-29 | TBD (chờ định dạng CSV) | TBD | M-04 | Q-04 (CSV logger), E-04-S01 |
 | E-11-S02 | Story | Alarm SLA 15′ + deviation case / corrective action (tạm) | FE-30, FE-31 | TBD (chờ đặc tả) | TBD | M-04 | E-11-S01 |
@@ -124,7 +128,8 @@
 | Epic | Màn hình (MD) | Engine (MD) | Ghi chú |
 | --- | --- | --- | --- |
 | Lõi LAB-4 (E-01 S01–S03, E-02, E-03 S01–S04, E-04 S01–S04, E-05, E-06, E-07-S01, E-08-S01) | 81,5 (14 màn) | 54 (ENG-01, 02, 03, 07) + một phần ENG-06, ENG-10 | ≈ 135,5 MD + phần chia, xếp vào S1–S4 |
-| Phần tạm (E-09…E-13 + story tạm của E-01, E-03, E-04, E-07, E-08) | 162 (27 màn) | 94 (ENG-04, 05, 08, 09 + phần còn lại ENG-06, ENG-10) | ≈ 256 MD, **chưa xếp ngày** vì chưa có đặc tả. Dồn hết vào S5–S6 sẽ vượt tải (~128 MD/sprint so với bình quân ~65 MD/sprint của cả build 391,5 MD / 6 sprint) → phải chạy song song từ S2–S3, tức đặc tả cần có trước M-03 |
+| E-10 Lập tuyến & giờ lái 2024 (tách riêng vì ràng buộc 2024) | 27 (SCR-18 C 9 · SCR-19 C 9 · SCR-20 M 4,5 · SCR-21 M 4,5) | 18 (ENG-04: engine kiểm giờ lái + version rule) | **45 MD theo estimate LAB-1. Estimate chưa tách riêng:** (a) lấy giờ làm thực tế của tài xế để tính lũy kế tháng / năm / 2 tuần (E-10-S04) — nguồn dữ liệu chưa xác định; (b) bộ fixture kiểm thử biên cho ACC-SCH-01 (lịch thường / bất khả thi / nghỉ / sự cố). Phân bổ theo story **đã được PM duyệt (2026-10-03)**: S01 9 · S02 3 · S03 5 · S04 6 · S05 13 · S06 9 · S07 0 (nằm trong màn publish) = 45 MD. Phần (a)(b) **chưa ước lượng**, bổ sung khi có đặc tả F06 |
+| Phần tạm còn lại (E-09, E-11…E-13 + story tạm của E-01, E-03, E-04, E-07, E-08) | 135 (23 màn) | 76 (ENG-05, 08, 09 + phần còn lại ENG-06, ENG-10) | ≈ 211 MD (cộng E-10 là ≈ 256 MD), **chưa xếp ngày** vì chưa có đặc tả. Dồn hết vào S5–S6 sẽ vượt tải (~128 MD/sprint so với bình quân ~65 MD/sprint của cả build 391,5 MD / 6 sprint) → phải chạy song song từ S2–S3, tức đặc tả cần có trước M-03 |
 
 **Cross-cutting notes**: IT/ST/UAT, NFR workstream (FE-44 hiệu năng / BCP / observability), data migration (F12 — FE-46, FE-47), hạ tầng / CI-CD, đào tạo, hypercare, PM/PMO là **dòng pha ở §1**, không phải Epic. Cập nhật tài liệu `yccms/docs/` chạy song song mọi sprint (DoD của từng story). Lộ trình kỹ thuật P0–P5 trong `yccms/docs/development-roadmap.md` tương ứng: P1 ≈ S1–S2 (E-01, E-02, E-04-S01), P2 ≈ S2 (E-03, E-04), P3 ≈ S3 (E-05, E-06), P4 ≈ S4 (E-07-S01, E-08-S01, E-02-S05).
 
@@ -133,3 +138,6 @@
 | Date | Updated by | Content |
 | --- | --- | --- |
 | 2026-10-03 | pm-plan-schedule skill | Tạo baseline dự thảo v0.1: 11 mốc, 13 Epic / 45 Story (24 story lõi LAB-4 có ngày sprint, 21 story tạm TBD). Nguồn: LAB-4 (phạm vi), RFP (mốc), LAB-1 sheet 07/04 (effort) |
+| 2026-10-03 | pm-plan-schedule skill | E-10 (F06) chia lại theo ràng buộc giờ lái 2024: 4 → 7 story (bản quy tắc có phiên bản, kiểm trong ngày, kiểm lũy kế theo kỳ, chặn publish, version tuyến, sự cố). Tách effort E-10 = 45 MD (LAB-1) và nêu phần estimate chưa tách riêng. Ghi nhận thiết kế chi tiết chưa có module lập lịch giao hàng; ngày vẫn TBD |
+| 2026-10-03 | pm-plan-schedule skill | PM duyệt cập nhật E-10: phân bổ 45 MD theo 7 story; thêm phụ thuộc đặc tả chi tiết F06 trước M-03 và rà soát luật 2024 (OPS-LAW-01) cho E-10-S02 |
+| 2026-10-03 | pm-plan-schedule skill | PM duyệt toàn bộ lịch làm baseline v1.0 (trước đó: bản nháp v0.1) |
