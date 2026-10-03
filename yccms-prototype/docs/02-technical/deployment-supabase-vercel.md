@@ -2,15 +2,15 @@
 
 Thời gian: ~15 phút. Cần tài khoản Supabase và Vercel (gói miễn phí là đủ).
 
-> **Trạng thái:** chưa deploy — chờ tài khoản Supabase/Vercel của người dùng. URL Vercel và link Supabase trong `README.md` vẫn là placeholder tới khi làm xong mục 5.
+> **Trạng thái:** Supabase đã cấu hình (project `upngghuyjvwhlxaqqqml`, Tokyo: schema, dữ liệu mock, 2 tài khoản demo; 26 test SQL và 7 kịch bản E2E pass trên DB thật). Vercel: đã deploy production tại <https://yccms-prototype.vercel.app> (project `yccms-prototype`, deploy bằng CLI từ thư mục `yccms-prototype/`; 7 kịch bản E2E pass trên URL production). Deploy lại: `cd yccms-prototype && npx vercel deploy --prod`.
 
 ## 1. Tạo project Supabase
 
 1. <https://supabase.com/dashboard> → **New project** → Region: **Northeast Asia (Tokyo)** → đặt *Database password* (ghi lại).
 2. Lấy thông tin ở **Project Settings**:
    - *Data API* → **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
-   - *API Keys* → **anon / publishable** → `NEXT_PUBLIC_SUPABASE_ANON_KEY`; **service_role / secret** → `SUPABASE_SERVICE_ROLE_KEY`
-   - Nút **Connect** → *Session pooler* (IPv4) → connection string → `SUPABASE_DB_URL` (thay `[YOUR-PASSWORD]`)
+   - *API Keys* → **publishable** (`sb_publishable_…`) → `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`; **secret** (`sb_secret_…`) → `SUPABASE_SECRET_KEY` (key kiểu cũ anon / service_role cũng dùng được với tên `…_ANON_KEY` / `…_SERVICE_ROLE_KEY`)
+   - Nút **Connect** → *Session pooler* (IPv4, cổng **5432** — không dùng cổng 6543 transaction pooler) → `SUPABASE_DB_URL`, thay `[YOUR-PASSWORD]`; ký tự đặc biệt phải mã hóa URL (`@` → `%40`)
 3. **Authentication → Sign In / Providers → Email**: tắt **Allow new users to sign up**. Anon key là công khai; tắt đăng ký để người lạ không tự tạo được tài khoản. (Kể cả khi tạo được, API vẫn trả 403 vì tài khoản đó không có bản ghi `profiles`.)
 
 ## 2. Cài DB + dữ liệu mock + tài khoản demo
@@ -41,7 +41,7 @@ npx vercel login
 cd yccms-prototype
 npx vercel link                                   # tạo project mới, root = thư mục hiện tại
 npx vercel env add NEXT_PUBLIC_SUPABASE_URL production
-npx vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY production
+npx vercel env add NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY production
 npx vercel --prod                                 # in ra URL production
 ```
 
@@ -49,8 +49,8 @@ npx vercel --prod                                 # in ra URL production
 
 1. Push repo lên GitHub → Vercel **Add New → Project** → import repo.
 2. **Root Directory** = `yccms-prototype` (framework tự nhận Next.js).
-3. **Environment Variables**: chỉ thêm `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-   **Không** đưa `SUPABASE_SERVICE_ROLE_KEY` / `SUPABASE_DB_URL` lên Vercel — app không cần, chỉ script setup dùng.
+3. **Environment Variables**: chỉ thêm `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+   **Không** đưa `SUPABASE_SECRET_KEY` / `SUPABASE_DB_URL` lên Vercel — app không cần, chỉ script setup dùng.
 4. Deploy.
 
 ## 5. Kiểm tra sau deploy

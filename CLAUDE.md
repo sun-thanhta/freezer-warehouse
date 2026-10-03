@@ -21,7 +21,7 @@ npm run build        # build production
 npm run typecheck    # tsc --noEmit
 npm run lint         # eslint
 npm test             # vitest — unit test luật nghiệp vụ (src/lib/rules)
-npm run db:setup     # áp schema + RPC, nạp mock, tạo 2 tài khoản demo (cần SUPABASE_SERVICE_ROLE_KEY + SUPABASE_DB_URL)
+npm run db:setup     # áp schema + RPC, nạp mock, tạo 2 tài khoản demo (cần SUPABASE_SECRET_KEY + SUPABASE_DB_URL)
 npm run db:seed      # chỉ nạp lại dữ liệu mock (reset demo)
 npm run db:test      # test hồi quy bảo mật SQL (supabase/tests, tự rollback; cần dữ liệu vừa seed)
 npm run test:e2e     # Playwright E2E (e2e/), E2E_BASE_URL mặc định http://localhost:3000; làm bẩn dữ liệu → db:seed sau đó
@@ -61,4 +61,4 @@ Máy dev không có Docker. Cách đã dùng để chạy E2E offline: Postgres 
 - File code < 200 dòng, tên kebab-case mô tả rõ mục đích.
 - UI tiếng Việt + thuật ngữ Nhật; tài liệu `.md` tiếng Việt tự nhiên, ít từ tiếng Anh.
 - Commit theo conventional commits, không nhắc tới AI trong message.
-- Sau khi deploy: cập nhật URL Vercel + link Supabase trong `yccms-prototype/README.md`.
+- Supabase: project `upngghuyjvwhlxaqqqml` (Tokyo). Biến công khai là `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (code vẫn nhận `NEXT_PUBLIC_SUPABASE_ANON_KEY`). Vercel: <https://yccms-prototype.vercel.app> (project `yccms-prototype`, deploy bằng `npx vercel deploy --prod` trong `yccms-prototype/`; `.vercelignore` chặn upload `.env*`). Chỉ 2 biến `NEXT_PUBLIC_*` nằm trên Vercel.

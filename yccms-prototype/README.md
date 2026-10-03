@@ -4,8 +4,8 @@ Prototype cho ユキコールドロジスティクス (khách mô phỏng, RFP Y
 
 | | |
 |---|---|
-| App (Vercel) | `https://<chưa-deploy>.vercel.app` ← *placeholder — chưa deploy, chờ tài khoản Vercel; điền sau khi deploy* |
-| Supabase project | `https://supabase.com/dashboard/project/<project-ref>` ← *placeholder — chưa tạo project, chờ tài khoản Supabase* |
+| App (Vercel) | <https://yccms-prototype.vercel.app> — mở lên là màn đăng nhập |
+| Supabase project | <https://supabase.com/dashboard/project/upngghuyjvwhlxaqqqml> (Tokyo) — đã cài schema + dữ liệu mock + 2 tài khoản demo |
 
 ## Tài khoản demo
 
@@ -18,8 +18,8 @@ Prototype cho ユキコールドロジスティクス (khách mô phỏng, RFP Y
 
 ```bash
 cd yccms-prototype
-cp .env.example .env.local   # điền NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
-                             # (+ SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL nếu cần cài DB)
+cp .env.example .env.local   # điền NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+                             # (+ SUPABASE_SECRET_KEY, SUPABASE_DB_URL nếu cần cài/reset DB)
 npm install
 npm run db:setup             # chỉ lần đầu: schema + mock data + 2 tài khoản demo
 npm run dev                  # http://localhost:3000 → màn đăng nhập
