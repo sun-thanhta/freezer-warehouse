@@ -9,6 +9,8 @@ Repo cho dự án đề xuất **Yuki Cold-Chain Management System (YCCMS)** —
 | `LAB-1/` | Gói đề xuất v2 theo RFP thật: `product-b-rfp-ja-v2.0-rc4.pdf` (RFP gốc, tiếng Nhật), `Yuki_00_Trich-yeu-cau-RFP_v2.docx`, `Yuki_Workbook_v2-RFP.xlsx` (12 function · 47 feature · 41 màn hình · 12 user story · 88 yêu cầu), proposal, quick report | **Chỉ đọc** — là đầu vào nghiệp vụ |
 | `Claude outputs/` | Bản v1 cũ (`Yuki_Estimation-Workbook.xlsx`, `Yuki_00_Bo-tai-lieu-khach_INPUT.docx`, proposal/quick report v1) và bản sao v2 | **Chỉ tham khảo**, đã bị thay thế — không lấy số liệu từ đây |
 | `yccms-prototype/` | Prototype MVP chạy được: Next.js 16 + Supabase + Vercel | App chính; có `README.md`, `docs/` riêng |
+| `LAB-4/` | Bộ thiết kế cơ bản + chi tiết dựng từ prototype: `01-basic-design/` (tổng quan, kiến trúc, màn hình/phân quyền), `02-wireframes/`, `03-detail-design/` (đặc tả màn, API, luật & mã lỗi), `04-adr/`, `05-database/` (ER đích + đối chiếu schema thật) | Mô tả **hệ thống đích**; chỗ khác prototype ghi `[Prototype khác]`. Sửa code/schema prototype thì cập nhật bảng đối chiếu `05-database/02-…` |
+| `LAB-3/` | Đề xuất upsell sau MVP (`.docx`) | Chỉ đọc |
 | `yccms-prototype/docs/` | Tài liệu dạng `.md`, chia folder `01-scope/`, `02-technical/`, `03-demo/`, `04-reports/` | Tài liệu mới luôn đặt vào đúng folder, đặt tên kebab-case |
 | `plans/` | Plan nội bộ của Takumi (bị gitignore) | |
 | `.claude/` | Takumi kit (agents, skills, rules) | Không sửa trừ khi được yêu cầu; `.claude/.tkm.json` có `takumi.sddMode: off` |
