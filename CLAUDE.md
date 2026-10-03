@@ -8,7 +8,8 @@ Repo cho dự án đề xuất **Yuki Cold-Chain Management System (YCCMS)** —
 |---|---|---|
 | `LAB-1/` | Gói đề xuất v2 theo RFP thật: `product-b-rfp-ja-v2.0-rc4.pdf` (RFP gốc, tiếng Nhật), `Yuki_00_Trich-yeu-cau-RFP_v2.docx`, `Yuki_Workbook_v2-RFP.xlsx` (12 function · 47 feature · 41 màn hình · 12 user story · 88 yêu cầu), proposal, quick report | **Chỉ đọc** — là đầu vào nghiệp vụ |
 | `Claude outputs/` | Bản v1 cũ (`Yuki_Estimation-Workbook.xlsx`, `Yuki_00_Bo-tai-lieu-khach_INPUT.docx`, proposal/quick report v1) và bản sao v2 | **Chỉ tham khảo**, đã bị thay thế — không lấy số liệu từ đây |
-| `yccms-prototype/` | Prototype MVP chạy được: Next.js 16 + Supabase + Vercel | App chính; có `README.md`, `docs/` riêng |
+| `yccms/` | **Dự án thật (bản build)**: Next.js 16 + Supabase, hiện chỉ chạy local (Supabase CLI trên Docker/Colima) | Có `README.md`, `CLAUDE.md`, `docs/` riêng (dựng từ LAB-4, là bản sống). Làm theo thiết kế, không theo prototype |
+| `yccms-prototype/` | Prototype MVP chạy được: Next.js 16 + Supabase + Vercel | Bản demo đã nộp; chỉ tham khảo khi build `yccms/` |
 | `LAB-4/` | Bộ thiết kế cơ bản + chi tiết dựng từ prototype: `01-basic-design/` (tổng quan, kiến trúc, màn hình/phân quyền), `02-wireframes/`, `03-detail-design/` (đặc tả màn, API, luật & mã lỗi), `04-adr/`, `05-database/` (ER đích + đối chiếu schema thật) | Mô tả **hệ thống đích**; chỗ khác prototype ghi `[Prototype khác]`. Sửa code/schema prototype thì cập nhật bảng đối chiếu `05-database/02-…` |
 | `LAB-3/` | Đề xuất upsell sau MVP (`.docx`) | Chỉ đọc |
 | `yccms-prototype/docs/` | Tài liệu dạng `.md`, chia folder `01-scope/`, `02-technical/`, `03-demo/`, `04-reports/` | Tài liệu mới luôn đặt vào đúng folder, đặt tên kebab-case |
@@ -56,7 +57,9 @@ Node ≥ 20.12 (repo dùng 22.23.1, xem `.node-version`). Env mẫu: `yccms-prot
 
 ## Kiểm thử không cần Supabase cloud
 
-Máy dev không có Docker. Cách đã dùng để chạy E2E offline: Postgres 14 local + PostgREST 16.4 (binary từ GitHub release) + gateway Node giả lập GoTrue và `/rest/v1`. Postgres 14 local không có `security_invoker` cho view (Supabase PG15+ có) → dùng hàm SQL thay view. Stub `auth.uid()` phải đọc cả `request.jwt.claim.sub` lẫn `request.jwt.claims` (PostgREST ≥ 12 chỉ đặt cái sau). Gateway giả lập phải trả header CORS + xử lý preflight OPTIONS, nếu không đăng nhập trên trình duyệt sẽ treo. Script giả lập không nằm trong repo; khi cần thì dựng lại theo mô tả này.
+`yccms/` dùng Supabase CLI chạy local trên Docker (Colima): xem `yccms/docs/00-development/local-development-setup.md`. Phần dưới đây là cách cũ của prototype, khi đó máy chưa dùng Docker.
+
+Khi dựng prototype, máy dev không có Docker. Cách đã dùng để chạy E2E offline: Postgres 14 local + PostgREST 16.4 (binary từ GitHub release) + gateway Node giả lập GoTrue và `/rest/v1`. Postgres 14 local không có `security_invoker` cho view (Supabase PG15+ có) → dùng hàm SQL thay view. Stub `auth.uid()` phải đọc cả `request.jwt.claim.sub` lẫn `request.jwt.claims` (PostgREST ≥ 12 chỉ đặt cái sau). Gateway giả lập phải trả header CORS + xử lý preflight OPTIONS, nếu không đăng nhập trên trình duyệt sẽ treo. Script giả lập không nằm trong repo; khi cần thì dựng lại theo mô tả này.
 
 ## Quy ước
 
